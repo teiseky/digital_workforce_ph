@@ -194,7 +194,7 @@ const Hero = () => {
                       <span className="font-medium tracking-wide text-sm">I am a Client</span>
                       <span className="relative">
                         <ArrowRight 
-                          className={`w-5 h-5 text-white transition-transform duration-200 ${hoveredBtn === 'client' ? '-rotate-45' : 'rotate-0'}`}
+                          className={`w-5 h-5 text-white transition-transform duration-200 ${hoveredBtn === 'client' ? 'rotate-0' : '-rotate-45'}`}
                         />
                       </span>
                   </div>
@@ -218,7 +218,7 @@ const Hero = () => {
                       <span className="font-medium tracking-wide text-sm relative z-10">I am a Candidate</span>
                       <span className="relative z-10">
                         <ArrowRight 
-                          className={`w-5 h-5 text-white/70 transition-transform duration-200 ${hoveredBtn === 'talent' ? '-rotate-45' : 'rotate-0'}`}
+                          className={`w-5 h-5 text-white/70 transition-transform duration-200 ${hoveredBtn === 'talent' ? 'rotate-0' : '-rotate-45'}`}
                         />
                       </span>
                   </div>
