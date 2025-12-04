@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+
+# Vite build output
+dist/
+
+# Local env
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor dirs
+.vscode/
+.idea/
+
+# Lockfiles (optional)
+# package-lock.json
+
+# OneDrive Autosave cache (since user's workspace is in OneDrive)
+~$*
