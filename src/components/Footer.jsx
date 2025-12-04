@@ -80,7 +80,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Digital Workforce PH. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Digital Workforce. All rights reserved.</p>
           <p>Site by: <span className="font-bold text-brand-black">MERDEGIA</span></p>
         </div>
       </div>
