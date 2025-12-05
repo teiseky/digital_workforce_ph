@@ -48,12 +48,10 @@ const Hero = () => {
     
     const scroll = () => {
       if (!isPaused && scrollContainer) {
-        // If we've scrolled past the first set of items (halfway), reset position to 0 to loop seamlessly
-        // We subtract half width to maintain the smooth illusion if user scrolled manually deep into 2nd set
         if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth / 2) {
             scrollContainer.scrollLeft -= scrollContainer.scrollWidth / 2;
         } else {
-            scrollContainer.scrollLeft += 0.8; // Adjust auto-scroll speed here
+            scrollContainer.scrollLeft += 0.8; 
         }
       }
       animationFrameId = requestAnimationFrame(scroll);
@@ -70,10 +68,8 @@ const Hero = () => {
     offset: ["start start", "end start"]
   });
   
-  // Parallax: Background moves slower than scroll
   const yParallax = useTransform(scrollYProgress, [0, 1], [0, 100]);
 
-  // Background Images Array
   const backgrounds = [
     "/hero-bg1.jpg",
     "/hero-bg2.jpg",
@@ -97,15 +93,12 @@ const Hero = () => {
   return (
     <section ref={containerRef} className="bg-white pb-0 font-sans overflow-x-hidden relative">
       
-      {/* CSS for Scroll & Animations */}
       <style>{`
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
         @keyframes shine {
-            to {
-              background-position: 200% center;
-            }
+            to { background-position: 200% center; }
         }
         .animate-shine {
             background-size: 200% auto;
@@ -136,7 +129,6 @@ const Hero = () => {
               />
             </AnimatePresence>
             
-            {/* Dark Overlay */}
             <div className="absolute inset-0 bg-black/50" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30" />
           </div>
@@ -144,7 +136,6 @@ const Hero = () => {
           {/* Content Container */}
           <div className="relative z-20 flex flex-col items-center justify-center text-center px-4 w-full max-w-5xl mt-[-30px]">
             
-            {/* Typography */}
             <motion.h1
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
@@ -166,13 +157,12 @@ const Hero = () => {
               We bridge the gap between elite Filipino talent and the world's most innovative companies.
             </motion.p>
 
-            {/* --- BUTTONS (Mobile Fix) --- */}
+            {/* --- BUTTONS --- */}
             <div className="relative w-full flex flex-col items-center px-4">
               <motion.div
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
-                  // Layout Change: Stack on mobile (flex-col), side-by-side on sm+ (flex-row)
                   className="flex flex-col sm:flex-row gap-4 w-full justify-center items-center max-w-lg"
               >
                   {/* Client Button */}
@@ -180,7 +170,6 @@ const Hero = () => {
                     onClick={() => scrollToSection('contact')}
                     onMouseEnter={() => setHoveredBtn('client')}
                     onMouseLeave={() => setHoveredBtn(null)}
-                    // Size Change: Fixed width on larger screens, full width but comfortable height on mobile
                     className="
                       group w-full sm:w-56 h-14
                       bg-brand-yellow hover:bg-yellow-500
@@ -254,16 +243,16 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* --- 2. PARTNERS (Auto-Scroll + Controllable) --- */}
-      <div className="max-w-[1400px] mx-auto mt-32 px-4">
-        {/* Container for fade effect and scroll */}
+      {/* --- 2. PARTNERS (Adjusted Spacing & Highlighting) --- */}
+      {/* Reduced mt-32 to mt-12 */}
+      <div className="max-w-[1400px] mx-auto mt-12 px-4">
         <div className="relative w-full group">
             
-            {/* Fade Gradients to indicate scrollability */}
+            {/* Fade Gradients */}
             <div className="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
             <div className="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
-            {/* Scrollable Container - "no-scrollbar" hides the dragger */}
+            {/* Reduced py-8 to py-6 */}
             <div 
                 ref={scrollRef}
                 onMouseEnter={() => setIsPaused(true)}
@@ -272,43 +261,27 @@ const Hero = () => {
                 onTouchEnd={() => setIsPaused(false)}
                 className="
                     flex overflow-x-auto no-scrollbar 
-                    gap-12 md:gap-16 py-8 items-center px-8 
+                    gap-12 md:gap-16 py-6 items-center px-8 
                     snap-none cursor-grab active:cursor-grabbing
                 "
             >
-                {/* FIRST SET */}
-                {[...Array(12)].map((_, i) => (
+                {/* LOGIC REUSED FOR SET 1 & SET 2 */}
+                {[...Array(24)].map((_, i) => (
                     <div 
-                        key={`set1-${i}`} 
+                        key={i} 
                         className="
                             flex-shrink-0
                             flex items-center justify-center 
-                            grayscale opacity-40 hover:grayscale-0 hover:opacity-100 
-                            transition-all duration-500
+                            opacity-50 hover:opacity-100 
+                            transform hover:scale-110 hover:drop-shadow-lg
+                            transition-all duration-300 ease-out
+                            cursor-pointer
                         "
                     >
+                        {/* Using i%12+1 ensures we loop client1 to client12 twice */}
                         <img
-                            src={`/CLIENT/client${i+1}.webp`}
-                            alt={`Client ${i+1}`}
-                            className="h-12 md:h-16 w-auto object-contain select-none pointer-events-none"
-                            draggable="false"
-                        />
-                    </div>
-                ))}
-                {/* SECOND SET (For seamless looping) */}
-                {[...Array(12)].map((_, i) => (
-                    <div 
-                        key={`set2-${i}`} 
-                        className="
-                            flex-shrink-0
-                            flex items-center justify-center 
-                            grayscale opacity-40 hover:grayscale-0 hover:opacity-100 
-                            transition-all duration-500
-                        "
-                    >
-                        <img
-                            src={`/CLIENT/client${i+1}.webp`}
-                            alt={`Client ${i+1}`}
+                            src={`/CLIENT/client${(i % 12) + 1}.webp`}
+                            alt={`Client ${(i % 12) + 1}`}
                             className="h-12 md:h-16 w-auto object-contain select-none pointer-events-none"
                             draggable="false"
                         />
@@ -332,13 +305,13 @@ const Hero = () => {
               </div>
 
               <div className="flex flex-wrap justify-center items-center gap-16 md:gap-32">
-                    <div className="group flex flex-col items-center gap-3 cursor-default">
+                    <div className="group flex flex-col items-center gap-3 cursor-default opacity-80 hover:opacity-100 transition-opacity">
                       <img src="/ibpap.png" alt="IBPAP" className="h-12 w-auto object-contain" />
                     </div>
-                    <div className="group flex flex-col items-center gap-3 cursor-default">
+                    <div className="group flex flex-col items-center gap-3 cursor-default opacity-80 hover:opacity-100 transition-opacity">
                       <img src="/amcham.png" alt="AMCHAM" className="h-20 w-auto object-contain" />
                     </div>
-                    <div className="group flex flex-col items-center gap-3 cursor-default">
+                    <div className="group flex flex-col items-center gap-3 cursor-default opacity-80 hover:opacity-100 transition-opacity">
                         <img src="/apbc.png" alt="ABPC" className="h-12 w-auto object-contain" />
                     </div>
               </div>

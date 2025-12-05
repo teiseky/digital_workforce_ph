@@ -30,7 +30,7 @@ const blogs = [
   },
   {
     category: "Recruitment",
-    title: "Digital Consulting PH x GetHired Job Fair",
+    title: "DCPH x GetHired Job Fair",
     image: "/blog-jobfair.jpg", 
     description: "Empowering job seekers and connecting top-tier talent with global career opportunities."
   }
@@ -153,7 +153,7 @@ const About = () => {
                                             <p className="text-gray-300 text-sm font-light leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100">
                                                 {post.description}
                                             </p>
-                                            <div className="mt-4 flex items-center text-white text-xs font-medium gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
+                                            <div className="text-brand-yellow mt-4 flex items-center  text-xs font-medium gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
                                                 Read More <ArrowUpRight size={14} />
                                             </div>
                                         </div>

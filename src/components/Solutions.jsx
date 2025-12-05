@@ -11,62 +11,62 @@ import {
 const serviceData = [
   { 
     title: "Executive Search", 
-    icon: <Search className="w-6 h-6" />, 
+    icon: Search, 
     desc: "Sourcing top-tier leadership and niche talent for both local and international markets." 
   },
   { 
     title: "Remote Staffing", 
-    icon: <Globe className="w-6 h-6" />, 
+    icon: Globe, 
     desc: "Connecting you with vetted Filipino remote professionals to scale your global operations." 
   },
   { 
     title: "Managed IT Solutions", 
-    icon: <Server className="w-6 h-6" />, 
+    icon: Server, 
     desc: "Full-scale technical support, infrastructure management, and cybersecurity for 24/7 reliability." 
   },
   { 
     title: "HR Integrated Services", 
-    icon: <Briefcase className="w-6 h-6" />, 
+    icon: Briefcase, 
     desc: "End-to-end payroll, benefits administration, and compliance handling for your workforce." 
   },
   { 
-    title: "Employer of Record (EOR)", 
-    icon: <ShieldCheck className="w-6 h-6" />, 
+    title: "Employer of Record", 
+    icon: ShieldCheck, 
     desc: "We handle the legal entities and local compliance; you simply manage the talent." 
   },
   { 
     title: "Corporate Events", 
-    icon: <Users className="w-6 h-6" />, 
+    icon: Users, 
     desc: "Strategic planning and logistics for large-scale company gatherings and conferences." 
   },
   { 
     title: "Corporate Training", 
-    icon: <GraduationCap className="w-6 h-6" />, 
+    icon: GraduationCap, 
     desc: "Upskilling teams for the modern digital landscape with tailored learning programs." 
   },
   { 
     title: "Talent Mapping", 
-    icon: <MapPin className="w-6 h-6" />, 
+    icon: MapPin, 
     desc: "Deep market intelligence to identify the best talent pools and salary benchmarks." 
   },
   { 
     title: "Seat Leasing", 
-    icon: <Building className="w-6 h-6" />, 
+    icon: Building, 
     desc: "Plug-and-play office infrastructure in prime Metro Manila locations." 
   },
   { 
     title: "Branding & Marketing", 
-    icon: <PenTool className="w-6 h-6" />, 
+    icon: PenTool, 
     desc: "Outsourced creative teams to drive your global campaigns and brand identity." 
   },
   { 
     title: "Business Consulting", 
-    icon: <Lightbulb className="w-6 h-6" />, 
+    icon: Lightbulb, 
     desc: "Expert guidance on operational efficiency, market entry, and organizational structure." 
   },
   { 
     title: "B.O.T Solutions", 
-    icon: <Rocket className="w-6 h-6" />, 
+    icon: Rocket, 
     desc: "Build-Operate-Transfer: We build and stabilize your team, then transfer ownership to you." 
   },
 ];
@@ -75,68 +75,67 @@ const serviceData = [
 const careerData = [
   {
     title: "Laravel Developer",
-    icon: <Code className="w-6 h-6" />,
+    icon: Code,
     desc: "Build robust web applications and contribute to innovative projects. 5+ years exp."
   },
   {
     title: "Senior Accountant",
-    icon: <Calculator className="w-6 h-6" />,
+    icon: Calculator,
     desc: "Certified Public Accountant (CPA) with 5+ years in financial statement analysis."
   },
   {
     title: "UI/UX Engineer",
-    icon: <Layout className="w-6 h-6" />,
+    icon: Layout,
     desc: "Design, develop, and optimize intuitive interfaces that delight users."
   },
   {
     title: "BIM Modeler",
-    icon: <Building className="w-6 h-6" />,
+    icon: Building,
     desc: "Transform design concepts into virtual reality using advanced architectural software."
   },
   {
     title: "Virtual Assistant",
-    icon: <Headphones className="w-6 h-6" />,
+    icon: Headphones,
     desc: "Support global operations from anywhere. Organized, detail-oriented, and communicative."
   },
   {
     title: "Audit Senior",
-    icon: <ShieldCheck className="w-6 h-6" />,
+    icon: ShieldCheck,
     desc: "Lead audit processes ensuring accuracy and compliance. Fully Qualified ACA/ACCA/CPA."
   },
   {
     title: "Graphic Designer",
-    icon: <PenTool className="w-6 h-6" />,
+    icon: PenTool,
     desc: "Create stunning visuals and impactful designs for global brand campaigns."
   },
   {
     title: "Account Executive",
-    icon: <Users className="w-6 h-6" />,
+    icon: Users,
     desc: "Fluent in Japanese? Leverage your skills to foster connections and drive business growth."
   },
   {
     title: "Structural Design Mgr",
-    icon: <Anchor className="w-6 h-6" />,
+    icon: Anchor,
     desc: "Lead the team in developing cutting-edge structures. 10+ years relevant experience."
   },
   {
     title: "SEO Specialist",
-    icon: <Search className="w-6 h-6" />,
+    icon: Search,
     desc: "Enhance visibility and drive organic traffic for WordPress and Shopify platforms."
   },
   {
     title: "IT Support",
-    icon: <Monitor className="w-6 h-6" />,
+    icon: Monitor,
     desc: "Ensure smooth operations and provide top-notch technical support."
   },
   {
     title: "Procurement Manager",
-    icon: <Briefcase className="w-6 h-6" />,
+    icon: Briefcase,
     desc: "Lead procurement strategies, optimize costs, and manage supplier relationships."
   },
 ];
 
 // --- DATA: FB POSTS ---
-// Generates an array of paths: /post1.jpg, /post2.jpg, ... /post8.jpg
 const fbPosts = Array.from({ length: 8 }).map((_, i) => ({
   src: `/post${i + 1}.jpg`,
   alt: `Job Opportunity ${i + 1}`
@@ -171,27 +170,29 @@ const Solutions = () => {
   );
 
   return (
-    <section id="solutions" className="py-20 bg-white relative overflow-hidden font-sans">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 opacity-20 pointer-events-none"
-        style={{
-          backgroundImage: 'url(/solutions-bg.png)',
-          backgroundSize: '70%',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      ></div>
+    <section id="solutions" className="py-24 bg-white relative font-sans w-full min-h-screen overflow-hidden">
+      
+      {/* BACKGROUND IMAGE FIX 
+        - Increased opacity to 0.25 for better visibility
+        - 'backgroundAttachment: fixed' prevents the image from resizing/glitching when container height changes
+        - 'backgroundPosition: center top' anchors it nicely
+      */}
+      <div className="absolute inset-0 pointer-events-none z-0">
+         <div 
+            className="w-full h-full opacity-80"
+            style={{
+                backgroundImage: 'url(/solutions-bg.png)',
+                backgroundSize: 'cover',
+                backgroundPosition: 'center top',
+                backgroundAttachment: 'fixed', 
+                backgroundRepeat: 'no-repeat'
+            }}
+         />
+         {/* Gradient Overlay */}
+         <div className="absolute inset-0 bg-gradient-to-b from-white/95 via-white/80 to-white/95" />
+      </div>
+
       <style>{`
-        @keyframes gradient {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animate-gradient {
-          background-size: 200% auto;
-          animation: gradient 3s ease infinite;
-        }
         /* Hide Scrollbar Utility */
         .no-scrollbar::-webkit-scrollbar {
           display: none;
@@ -200,35 +201,44 @@ const Solutions = () => {
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+        .animate-gradient-text {
+            background-size: 200% auto;
+            animation: textShine 4s linear infinite;
+        }
+        @keyframes textShine {
+            to {
+                background-position: 200% center;
+            }
+        }
       `}</style>
 
-      <div className="container mx-auto px-6 relative z-10 max-w-5xl">
+      <div className="container mx-auto px-6 relative z-10 max-w-6xl">
         
         {/* Toggle Switch */}
-        <div className="flex justify-center mb-10">
-          <div className="bg-gray-100 p-1 rounded-full inline-flex relative">
+        <div className="flex justify-center mb-12">
+          <div className="bg-slate-50 p-1.5 rounded-full inline-flex relative shadow-inner border border-slate-200">
             <motion.div
-              className="absolute top-1 bottom-1 bg-white rounded-full shadow-sm z-0"
+              className="absolute top-1.5 bottom-1.5 bg-slate-900 rounded-full shadow-lg z-0"
               initial={false}
               animate={{
-                left: activeTab === 'business' ? '4px' : '50%',
-                width: 'calc(50% - 4px)',
+                left: activeTab === 'business' ? '6px' : '50%',
+                width: 'calc(50% - 6px)',
                 x: activeTab === 'business' ? 0 : 0
               }}
               transition={{ type: "spring", stiffness: 400, damping: 30 }}
             />
             <button
               onClick={() => handleTabChange('business')}
-              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold tracking-wide transition-colors duration-300 ${
-                activeTab === 'business' ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-300 ${
+                activeTab === 'business' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               FOR BUSINESS
             </button>
             <button
               onClick={() => handleTabChange('candidates')}
-              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold tracking-wide transition-colors duration-300 ${
-                activeTab === 'candidates' ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              className={`relative z-10 px-8 py-3 rounded-full text-sm font-bold tracking-wide transition-colors duration-300 ${
+                activeTab === 'candidates' ? 'text-white' : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               FOR CANDIDATES
@@ -236,8 +246,8 @@ const Solutions = () => {
           </div>
         </div>
 
-        {/* Dynamic Header - Fixed Height */}
-        <div className="text-center mb-12 min-h-[160px] flex flex-col justify-end">
+        {/* Dynamic Header */}
+        <div className="text-center mb-14 min-h-[140px] flex flex-col justify-end">
            <AnimatePresence mode='wait'>
             {activeTab === 'business' ? (
               <motion.div
@@ -247,17 +257,17 @@ const Solutions = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                <span className="text-brand-yellow font-bold text-xs tracking-widest uppercase mb-3 block">
+                <span className="text-yellow-500 font-extrabold text-xs tracking-[0.2em] uppercase mb-4 block">
                   Our Expertise
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-brand-yellow to-gray-900 animate-gradient pb-1">
-                    Comprehensive Solutions
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-slate-900">
+                  Comprehensive Solutions
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-green-600 to-yellow-500 animate-gradient-text mt-1">
+                     For Global Growth
                   </span>
-                  <span className="text-black block mt-1">for Every Business Need</span>
                 </h2>
-                <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
-                  From local startups to global enterprises, we provide the infrastructure and talent to scale without limits.
+                <p className="text-slate-600 max-w-2xl mx-auto text-base leading-relaxed font-medium">
+                  Infrastructure, compliance, and top-tier talent management for local startups to global enterprises.
                 </p>
               </motion.div>
             ) : (
@@ -268,81 +278,87 @@ const Solutions = () => {
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.2 }}
               >
-                <span className="text-brand-yellow font-bold text-xs tracking-widest uppercase mb-3 block">
-                  Our Opportunities
+                <span className="text-green-600 font-extrabold text-xs tracking-[0.2em] uppercase mb-4 block">
+                  Join Our Team
                 </span>
-                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-brand-yellow to-gray-900 animate-gradient pb-1">
-                    Fostering Careers
+                <h2 className="text-4xl md:text-5xl font-black tracking-tight mb-4 text-slate-900">
+                  Fostering Careers
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-blue-900 via-green-600 to-yellow-500 animate-gradient-text mt-1">
+                     Connecting Top Talent
                   </span>
-                  <span className="text-black block mt-1">Connecting Top Talent</span>
                 </h2>
-                <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
-                  Cultivating careers and excellence. Where top talent thrives in a culture of success.
+                <p className="text-slate-600 max-w-2xl mx-auto text-base leading-relaxed font-medium">
+                  Find your next big opportunity. We cultivate excellence where top talent thrives.
                 </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Unified Grid - Fixed Height Wrapper */}
-        <div className="min-h-[420px]">
-          <AnimatePresence mode='wait'>
-            <motion.div
-              key={`${activeTab}-${currentPage}`}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4"
-            >
-              {currentItems.map((item, index) => (
-                  <div
-                    key={item.title}
-                    className="group bg-white p-6 rounded-2xl border border-gray-100 hover:bg-gray-50 hover:border-brand-yellow/50 transition-all duration-300 h-full flex flex-col items-start"
-                  >
-                    {/* Icon */}
-                    <div className="mb-4 text-gray-700 group-hover:text-brand-yellow transition-colors duration-300">
-                      {item.icon}
-                    </div>
+        {/* Unified Grid Container - REDUCED MIN-HEIGHT FOR CLOSER BUTTONS */}
+        <div className="min-h-[420px] relative"> 
+            <AnimatePresence mode='wait'>
+              <motion.div
+                key={`${activeTab}-${currentPage}`}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              >
+                {currentItems.map((item, index) => (
+                    <div
+                      key={item.title}
+                      className="group bg-white p-8 rounded-2xl border border-slate-100 shadow-sm hover:shadow-2xl hover:border-yellow-400/30 transition-all duration-300 h-full flex flex-col items-start relative overflow-hidden"
+                    >
+                      {/* Hover Decoration */}
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-yellow-100 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
-                    {/* Content */}
-                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-yellow transition-colors">
-                      {item.title}
-                    </h3>
-                    
-                    <p className="text-gray-500 leading-relaxed text-sm flex-grow">
-                      {item.desc}
-                    </p>
-                    
-                    {/* More Details Link (Only for Candidates) */}
-                    {activeTab === 'candidates' && (
-                        <span className="mt-4 text-xs font-bold text-gray-900 border-b border-brand-yellow pb-0.5 group-hover:text-brand-yellow transition-colors cursor-pointer">
-                            More Details
-                        </span>
-                    )}
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+                      {/* Icon - Black by default, Yellow on Hover */}
+                      <div className="mb-6 p-0 relative z-10 group-hover:scale-110 transition-transform duration-300">
+                        <item.icon 
+                            className="w-10 h-10 text-slate-900 group-hover:text-yellow-500 transition-colors duration-300" 
+                        />
+                      </div>
+
+                      {/* Content */}
+                      <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-900 transition-colors z-10">
+                        {item.title}
+                      </h3>
+                      
+                      <p className="text-slate-500 leading-relaxed text-sm flex-grow font-medium z-10">
+                        {item.desc}
+                      </p>
+                      
+                      {/* More Details Link (Only for Candidates) */}
+                      {activeTab === 'candidates' && (
+                          <div className="mt-6 flex items-center gap-2 text-sm font-bold text-blue-900 group-hover:text-yellow-600 transition-colors cursor-pointer z-10">
+                              More Details <ArrowRight className="w-4 h-4" />
+                          </div>
+                      )}
+                  </div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
         </div>
 
-        {/* Navigation Controls */}
-        <div className="flex items-center justify-center gap-4 mt-10">
+        {/* Navigation - REDUCED TOP MARGIN */}
+        <div className="flex items-center justify-center gap-6 mt-8">
             <button
                 onClick={prevPage}
-                className="group w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
+                className="group w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center hover:bg-slate-900 hover:border-slate-900 transition-all duration-300"
                 aria-label="Previous Page"
             >
-                <ArrowLeft className="w-4 h-4 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:-translate-x-0.5 transition-transform" />
+                <ArrowLeft className="w-5 h-5 text-slate-400 group-hover:text-yellow-400 transition-colors group-hover:-translate-x-0.5 transition-transform" />
             </button>
 
-            <div className="flex gap-1.5">
+            {/* Page Indicators */}
+            <div className="flex gap-2">
                 {[...Array(totalPages)].map((_, idx) => (
                     <div 
                         key={idx} 
-                        className={`h-1 rounded-full transition-all duration-300 ${
-                            currentPage === idx ? 'w-6 bg-brand-black' : 'w-1 bg-gray-200'
+                        className={`h-1.5 rounded-full transition-all duration-300 ${
+                            currentPage === idx ? 'w-8 bg-slate-900' : 'w-2 bg-slate-200'
                         }`}
                     />
                 ))}
@@ -350,10 +366,10 @@ const Solutions = () => {
 
             <button
                 onClick={nextPage}
-                className="group w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
+                className="group w-12 h-12 rounded-full border border-slate-200 bg-white shadow-sm flex items-center justify-center hover:bg-slate-900 hover:border-slate-900 transition-all duration-300"
                 aria-label="Next Page"
             >
-                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:translate-x-0.5 transition-transform" />
+                <ArrowRight className="w-5 h-5 text-slate-400 group-hover:text-yellow-400 transition-colors group-hover:translate-x-0.5 transition-transform" />
             </button>
         </div>
 
@@ -361,19 +377,20 @@ const Solutions = () => {
         <AnimatePresence>
           {activeTab === 'candidates' && (
             <motion.div
+              layout 
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
               transition={{ delay: 0.1, duration: 0.5 }}
-              className="mt-20 pt-10 border-t border-gray-100"
+              className="mt-20 pt-10 border-t border-slate-100"
             >
               {/* Header for FB Section */}
               <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
                 <div>
-                  <span className="text-brand-yellow font-bold text-[10px] tracking-widest uppercase mb-2 flex items-center gap-2">
+                  <span className="text-blue-600 font-bold text-[10px] tracking-widest uppercase mb-2 flex items-center gap-2">
                     Social Media Updates
                   </span>
-                  <h3 className="text-2xl font-bold text-gray-900">
+                  <h3 className="text-2xl font-bold text-slate-900">
                     Latest Openings
                   </h3>
                 </div>
@@ -382,10 +399,10 @@ const Solutions = () => {
                   href="https://facebook.com/yourpage" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-2 text-xs font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-brand-yellow hover:text-gray-900 transition-all duration-300 shadow-lg shadow-gray-200"
+                  className="group flex items-center gap-2 text-xs font-bold bg-[#1877F2] text-white px-6 py-3 rounded-full hover:bg-[#166fe5] hover:shadow-lg transition-all duration-300"
                 >
+                  <Facebook className="w-4 h-4 fill-white" />
                   View Facebook Page
-                  <ExternalLink className="w-3 h-3 group-hover:scale-110 transition-transform" />
                 </a>
               </div>
 
@@ -395,7 +412,7 @@ const Solutions = () => {
                   {fbPosts.map((post, index) => (
                     <div 
                       key={index} 
-                      className="flex-none w-64 md:w-72 aspect-[4/5] relative rounded-xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 bg-gray-50 snap-center group/card cursor-pointer"
+                      className="flex-none w-64 md:w-72 aspect-[4/5] relative rounded-xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 bg-slate-50 snap-center group/card cursor-pointer"
                     >
                       {/* Image Placeholder */}
                       <img 
@@ -403,23 +420,19 @@ const Solutions = () => {
                         alt={post.alt} 
                         className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
                         onError={(e) => {
-                           // Fallback if image not found to keep layout pretty
-                           e.target.src = "https://placehold.co/400x500/f3f4f6/1f2937?text=Job+Post"; 
+                           e.target.src = "https://placehold.co/400x500/f1f5f9/1e293b?text=Job+Post"; 
                         }}
                       />
                       
                       {/* Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <span className="text-white text-xs font-semibold px-4 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 flex items-center gap-2">
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                        <span className="text-slate-900 text-xs font-bold px-4 py-2 bg-yellow-400 rounded-full shadow-lg flex items-center gap-2">
                            View Post <ArrowRight className="w-3 h-3" />
                         </span>
                       </div>
                     </div>
                   ))}
                 </div>
-                
-                {/* Visual Cue for Scrolling */}
-                <div className="absolute right-0 top-0 bottom-8 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
               </div>
               
             </motion.div>
