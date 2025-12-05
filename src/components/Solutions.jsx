@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Users, GraduationCap, Building, Monitor, 
-  Briefcase, ShieldCheck, MapPin, TrendingUp, PenTool, 
-  Globe, Server, ArrowLeft, ArrowRight, Lightbulb, Rocket 
+  Briefcase, ShieldCheck, MapPin, PenTool, 
+  Globe, Server, ArrowLeft, ArrowRight, Lightbulb, Rocket,
+  Code, Calculator, Layout, Headphones, Anchor
 } from 'lucide-react';
 
-// --- DATA ---
-// Unified list of 12 services (Perfect for 3 pages of 4 items)
-const allServices = [
+// --- DATA: SERVICES (Business Owners) ---
+const serviceData = [
   { 
     title: "Executive Search", 
     icon: <Search className="w-6 h-6" />, 
@@ -71,26 +71,78 @@ const allServices = [
   },
 ];
 
-// --- COMPONENTS ---
-
-const BackgroundGlobe = () => (
-  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] pointer-events-none opacity-[0.03] z-0 translate-y-1/2">
-    <svg viewBox="0 0 200 200" className="w-full h-full animate-[spin_60s_linear_infinite]">
-      <circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" strokeWidth="0.5" />
-      <path d="M10,100 a90,30 0 1,0 180,0 a90,30 0 1,0 -180,0" fill="none" stroke="currentColor" strokeWidth="0.5" />
-      <path d="M100,10 a30,90 0 1,0 0,180 a30,90 0 1,0 0,-180" fill="none" stroke="currentColor" strokeWidth="0.5" />
-      <path d="M36,36 a90,90 0 0,1 128,128" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 4" />
-      <path d="M36,164 a90,90 0 0,0 128,-128" fill="none" stroke="currentColor" strokeWidth="0.5" strokeDasharray="4 4" />
-      <line x1="100" y1="10" x2="100" y2="190" stroke="currentColor" strokeWidth="0.5" />
-      <line x1="10" y1="100" x2="190" y2="100" stroke="currentColor" strokeWidth="0.5" />
-    </svg>
-  </div>
-);
+// --- DATA: CAREERS (Job Seekers) ---
+const careerData = [
+  {
+    title: "Laravel Developer",
+    icon: <Code className="w-6 h-6" />,
+    desc: "Build robust web applications and contribute to innovative projects. 5+ years exp."
+  },
+  {
+    title: "Senior Accountant",
+    icon: <Calculator className="w-6 h-6" />,
+    desc: "Certified Public Accountant (CPA) with 5+ years in financial statement analysis."
+  },
+  {
+    title: "UI/UX Engineer",
+    icon: <Layout className="w-6 h-6" />,
+    desc: "Design, develop, and optimize intuitive interfaces that delight users."
+  },
+  {
+    title: "BIM Modeler",
+    icon: <Building className="w-6 h-6" />,
+    desc: "Transform design concepts into virtual reality using advanced architectural software."
+  },
+  {
+    title: "Virtual Assistant",
+    icon: <Headphones className="w-6 h-6" />,
+    desc: "Support global operations from anywhere. Organized, detail-oriented, and communicative."
+  },
+  {
+    title: "Audit Senior",
+    icon: <ShieldCheck className="w-6 h-6" />,
+    desc: "Lead audit processes ensuring accuracy and compliance. Fully Qualified ACA/ACCA/CPA."
+  },
+  {
+    title: "Graphic Designer",
+    icon: <PenTool className="w-6 h-6" />,
+    desc: "Create stunning visuals and impactful designs for global brand campaigns."
+  },
+  {
+    title: "Account Executive",
+    icon: <Users className="w-6 h-6" />,
+    desc: "Fluent in Japanese? Leverage your skills to foster connections and drive business growth."
+  },
+  {
+    title: "Structural Design Mgr",
+    icon: <Anchor className="w-6 h-6" />,
+    desc: "Lead the team in developing cutting-edge structures. 10+ years relevant experience."
+  },
+  {
+    title: "SEO Specialist",
+    icon: <Search className="w-6 h-6" />,
+    desc: "Enhance visibility and drive organic traffic for WordPress and Shopify platforms."
+  },
+  {
+    title: "IT Support",
+    icon: <Monitor className="w-6 h-6" />,
+    desc: "Ensure smooth operations and provide top-notch technical support."
+  },
+  {
+    title: "Procurement Manager",
+    icon: <Briefcase className="w-6 h-6" />,
+    desc: "Lead procurement strategies, optimize costs, and manage supplier relationships."
+  },
+];
 
 const Solutions = () => {
+  const [activeTab, setActiveTab] = useState('business'); // 'business' | 'candidates'
   const [currentPage, setCurrentPage] = useState(0);
+  
+  // Select data based on tab
+  const activeData = activeTab === 'business' ? serviceData : careerData;
   const itemsPerPage = 4;
-  const totalPages = Math.ceil(allServices.length / itemsPerPage);
+  const totalPages = Math.ceil(activeData.length / itemsPerPage);
 
   const nextPage = () => {
     setCurrentPage((prev) => (prev + 1) % totalPages);
@@ -100,16 +152,22 @@ const Solutions = () => {
     setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
   };
 
-  const currentServices = allServices.slice(
+  // Reset page when switching tabs
+  const handleTabChange = (tab) => {
+    setActiveTab(tab);
+    setCurrentPage(0);
+  };
+
+  const currentItems = activeData.slice(
     currentPage * itemsPerPage,
     (currentPage + 1) * itemsPerPage
   );
 
   return (
-    <section id="solutions" className="py-24 bg-white relative overflow-hidden font-sans">
-      {/* Background Image with Reduced Opacity and Smaller Size */}
+    <section id="solutions" className="py-20 bg-white relative overflow-hidden font-sans">
+      {/* Background Image */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 opacity-20 pointer-events-none"
         style={{
           backgroundImage: 'url(/solutions-bg.png)',
           backgroundSize: '70%',
@@ -129,70 +187,125 @@ const Solutions = () => {
         }
       `}</style>
 
-
-      <div className="container mx-auto px-6 relative z-10 max-w-6xl">
+      <div className="container mx-auto px-6 relative z-10 max-w-5xl">
         
-        {/* Header Section */}
-        <div className="text-center mb-20">
-          <motion.span 
-            initial={{ opacity: 0 }} 
-            whileInView={{ opacity: 1 }}
-            className="text-brand-yellow font-bold text-sm tracking-widest uppercase mb-4 block"
-          >
-            Our Expertise
-          </motion.span>
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-5xl md:text-6xl font-bold tracking-tight mb-6"
-          >
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-brand-yellow to-gray-900 animate-gradient pb-1">
-              Comprehensive Solutions
-            </span>
-            <br />
-            <span className="text-black">for Every Business Need</span>
-          </motion.h2>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed"
-          >
-            From local startups to global enterprises, we provide the infrastructure, 
-            talent, and strategy you need to scale without limits.
-          </motion.p>
+        {/* Toggle Switch */}
+        <div className="flex justify-center mb-10">
+          <div className="bg-gray-100 p-1 rounded-full inline-flex relative">
+            <motion.div
+              className="absolute top-1 bottom-1 bg-white rounded-full shadow-sm z-0"
+              initial={false}
+              animate={{
+                left: activeTab === 'business' ? '4px' : '50%',
+                width: 'calc(50% - 4px)',
+                x: activeTab === 'business' ? 0 : 0
+              }}
+              transition={{ type: "spring", stiffness: 400, damping: 30 }}
+            />
+            <button
+              onClick={() => handleTabChange('business')}
+              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold tracking-wide transition-colors duration-300 ${
+                activeTab === 'business' ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              FOR BUSINESS
+            </button>
+            <button
+              onClick={() => handleTabChange('candidates')}
+              className={`relative z-10 px-6 py-2 rounded-full text-xs font-bold tracking-wide transition-colors duration-300 ${
+                activeTab === 'candidates' ? 'text-gray-900' : 'text-gray-500 hover:text-gray-700'
+              }`}
+            >
+              FOR CANDIDATES
+            </button>
+          </div>
         </div>
 
-        {/* Services Grid (2x2) */}
-        <div className="min-h-[500px]">
+        {/* Dynamic Header - Fixed Height */}
+        <div className="text-center mb-12 min-h-[160px] flex flex-col justify-end">
+           <AnimatePresence mode='wait'>
+            {activeTab === 'business' ? (
+              <motion.div
+                key="header-business"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <span className="text-brand-yellow font-bold text-xs tracking-widest uppercase mb-3 block">
+                  Our Expertise
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-brand-yellow to-gray-900 animate-gradient pb-1">
+                    Comprehensive Solutions
+                  </span>
+                  <span className="text-black block mt-1">for Every Business Need</span>
+                </h2>
+                <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
+                  From local startups to global enterprises, we provide the infrastructure and talent to scale without limits.
+                </p>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="header-candidates"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+              >
+                <span className="text-brand-yellow font-bold text-xs tracking-widest uppercase mb-3 block">
+                  Our Opportunities
+                </span>
+                <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-gray-900 via-brand-yellow to-gray-900 animate-gradient pb-1">
+                    Fostering Careers
+                  </span>
+                  <span className="text-black block mt-1">Connecting Top Talent</span>
+                </h2>
+                <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
+                  Cultivating careers and excellence. Where top talent thrives in a culture of success.
+                </p>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Unified Grid - Fixed Height Wrapper */}
+        <div className="min-h-[420px]">
           <AnimatePresence mode='wait'>
             <motion.div
-              key={currentPage}
+              key={`${activeTab}-${currentPage}`}
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="grid grid-cols-1 md:grid-cols-2 gap-4"
             >
-              {currentServices.map((service, index) => (
+              {currentItems.map((item, index) => (
                   <div
-                    key={service.title}
-                    className="group bg-white p-6 md:p-8 rounded-3xl hover:bg-gray-50 transition-all duration-500 h-full flex flex-col items-start"
+                    key={item.title}
+                    className="group bg-white p-6 rounded-2xl border border-gray-100 hover:bg-gray-50 hover:border-brand-yellow/50 transition-all duration-300 h-full flex flex-col items-start"
                   >
-                    {/* Clean Icon Styling */}
-                    <div className="mb-6 relative">
-                      <div className="text-gray-700 group-hover:text-brand-yellow transition-colors duration-300">
-                        {service.icon}
-                      </div>
+                    {/* Icon */}
+                    <div className="mb-4 text-gray-700 group-hover:text-brand-yellow transition-colors duration-300">
+                      {item.icon}
                     </div>
 
-                  <h3 className="text-2xl text-gray-900 mb-3 group-hover:text-brand-yellow transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-500 leading-relaxed text-base">
-                    {service.desc}
-                  </p>
+                    {/* Content */}
+                    <h3 className="text-lg font-bold text-gray-900 mb-2 group-hover:text-brand-yellow transition-colors">
+                      {item.title}
+                    </h3>
+                    
+                    <p className="text-gray-500 leading-relaxed text-sm flex-grow">
+                      {item.desc}
+                    </p>
+                    
+                    {/* More Details Link (Only for Candidates) */}
+                    {activeTab === 'candidates' && (
+                        <span className="mt-4 text-xs font-bold text-gray-900 border-b border-brand-yellow pb-0.5 group-hover:text-brand-yellow transition-colors cursor-pointer">
+                            More Details
+                        </span>
+                    )}
                 </div>
               ))}
             </motion.div>
@@ -200,36 +313,32 @@ const Solutions = () => {
         </div>
 
         {/* Navigation Controls */}
-        <div className="flex items-center justify-center gap-6 mt-16">
-            
-            {/* Prev Button */}
+        <div className="flex items-center justify-center gap-4 mt-10">
             <button
                 onClick={prevPage}
-                className="group w-14 h-14 rounded-2xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
+                className="group w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
                 aria-label="Previous Page"
             >
-                <ArrowLeft className="w-5 h-5 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:-translate-x-1 transition-transform" />
+                <ArrowLeft className="w-4 h-4 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:-translate-x-0.5 transition-transform" />
             </button>
 
-            {/* Pagination Indicators */}
-            <div className="flex gap-2">
+            <div className="flex gap-1.5">
                 {[...Array(totalPages)].map((_, idx) => (
                     <div 
                         key={idx} 
-                        className={`h-1.5 rounded-full transition-all duration-300 ${
-                            currentPage === idx ? 'w-8 bg-brand-black' : 'w-1.5 bg-gray-200'
+                        className={`h-1 rounded-full transition-all duration-300 ${
+                            currentPage === idx ? 'w-6 bg-brand-black' : 'w-1 bg-gray-200'
                         }`}
                     />
                 ))}
             </div>
 
-            {/* Next Button */}
             <button
                 onClick={nextPage}
-                className="group w-14 h-14 rounded-2xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
+                className="group w-10 h-10 rounded-xl border border-gray-200 bg-white flex items-center justify-center hover:border-brand-yellow hover:bg-gray-50 transition-all duration-300"
                 aria-label="Next Page"
             >
-                <ArrowRight className="w-5 h-5 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:translate-x-1 transition-transform" />
+                <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:translate-x-0.5 transition-transform" />
             </button>
         </div>
 
