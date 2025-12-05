@@ -4,7 +4,7 @@ import {
   Search, Users, GraduationCap, Building, Monitor, 
   Briefcase, ShieldCheck, MapPin, PenTool, 
   Globe, Server, ArrowLeft, ArrowRight, Lightbulb, Rocket,
-  Code, Calculator, Layout, Headphones, Anchor
+  Code, Calculator, Layout, Headphones, Anchor, Facebook, ExternalLink
 } from 'lucide-react';
 
 // --- DATA: SERVICES (Business Owners) ---
@@ -135,6 +135,13 @@ const careerData = [
   },
 ];
 
+// --- DATA: FB POSTS ---
+// Generates an array of paths: /post1.jpg, /post2.jpg, ... /post8.jpg
+const fbPosts = Array.from({ length: 8 }).map((_, i) => ({
+  src: `/post${i + 1}.jpg`,
+  alt: `Job Opportunity ${i + 1}`
+}));
+
 const Solutions = () => {
   const [activeTab, setActiveTab] = useState('business'); // 'business' | 'candidates'
   const [currentPage, setCurrentPage] = useState(0);
@@ -184,6 +191,14 @@ const Solutions = () => {
         .animate-gradient {
           background-size: 200% auto;
           animation: gradient 3s ease infinite;
+        }
+        /* Hide Scrollbar Utility */
+        .no-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .no-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
         }
       `}</style>
 
@@ -341,6 +356,75 @@ const Solutions = () => {
                 <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-brand-yellow transition-colors group-hover:translate-x-0.5 transition-transform" />
             </button>
         </div>
+
+        {/* --- NEW SECTION: Facebook Job Feed (Visible only for Candidates) --- */}
+        <AnimatePresence>
+          {activeTab === 'candidates' && (
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              transition={{ delay: 0.1, duration: 0.5 }}
+              className="mt-20 pt-10 border-t border-gray-100"
+            >
+              {/* Header for FB Section */}
+              <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+                <div>
+                  <span className="text-brand-yellow font-bold text-[10px] tracking-widest uppercase mb-2 flex items-center gap-2">
+                    Social Media Updates
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    Latest Openings
+                  </h3>
+                </div>
+                
+                <a 
+                  href="https://facebook.com/yourpage" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-2 text-xs font-bold bg-gray-900 text-white px-5 py-2.5 rounded-full hover:bg-brand-yellow hover:text-gray-900 transition-all duration-300 shadow-lg shadow-gray-200"
+                >
+                  View Facebook Page
+                  <ExternalLink className="w-3 h-3 group-hover:scale-110 transition-transform" />
+                </a>
+              </div>
+
+              {/* Scrollable Container */}
+              <div className="relative group/slider">
+                <div className="flex overflow-x-auto gap-4 pb-8 px-1 -mx-1 no-scrollbar scroll-smooth snap-x snap-mandatory">
+                  {fbPosts.map((post, index) => (
+                    <div 
+                      key={index} 
+                      className="flex-none w-64 md:w-72 aspect-[4/5] relative rounded-xl overflow-hidden border border-gray-100 shadow-md hover:shadow-xl transition-all duration-300 bg-gray-50 snap-center group/card cursor-pointer"
+                    >
+                      {/* Image Placeholder */}
+                      <img 
+                        src={post.src} 
+                        alt={post.alt} 
+                        className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                           // Fallback if image not found to keep layout pretty
+                           e.target.src = "https://placehold.co/400x500/f3f4f6/1f2937?text=Job+Post"; 
+                        }}
+                      />
+                      
+                      {/* Overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/card:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
+                        <span className="text-white text-xs font-semibold px-4 py-2 bg-white/20 backdrop-blur-md rounded-full border border-white/30 flex items-center gap-2">
+                           View Post <ArrowRight className="w-3 h-3" />
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                {/* Visual Cue for Scrolling */}
+                <div className="absolute right-0 top-0 bottom-8 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none md:hidden"></div>
+              </div>
+              
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
