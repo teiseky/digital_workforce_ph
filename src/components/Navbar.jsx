@@ -3,15 +3,37 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, ChevronRight, Users, Building, Monitor, Briefcase, UserCheck, Settings, Globe } from 'lucide-react';
 
 const Navbar = () => {
-  const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [hoveredTab, setHoveredTab] = useState(null);
+  
+  // Scroll Logic States
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Logic: 
+      // 1. If at the very top (within 100px), always show.
+      // 2. If scrolling UP, show.
+      // 3. If scrolling DOWN and past 100px, hide.
+      if (currentScrollY < 100) {
+        setIsVisible(true);
+      } else {
+        if (currentScrollY > lastScrollY) {
+          setIsVisible(false); // Scrolling down
+        } else {
+          setIsVisible(true);  // Scrolling up
+        }
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -72,9 +94,12 @@ const Navbar = () => {
   return (
     <>
       <motion.nav
-        initial={{ y: -100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        initial={{ y: 0 }}
+        animate={{ 
+          y: isVisible ? 0 : -100,
+          opacity: isVisible ? 1 : 0 
+        }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
         className="fixed top-10 left-0 right-0 z-50 flex justify-center px-4"
         onMouseLeave={() => setHoveredTab(null)} 
       >
@@ -129,10 +154,15 @@ const Navbar = () => {
                        animate={{ opacity: 1, y: 0, scale: 1 }}
                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
                        transition={{ duration: 0.2, ease: "easeOut" }}
-                       className="absolute top-full left-1/2 -translate-x-1/2 pt-6 z-50 origin-top"
+                       // UPDATED: 
+                       // 1. `left-0` instead of center/translate (aligns to text)
+                       // 2. `pt-6` restored (puts the height back)
+                       // 3. `origin-top-left` for better animation alignment
+                       className="absolute top-full left-0 pt-6 z-50 origin-top-left"
                      >
                        <div 
-                           className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden text-left"
+                           // UPDATED: Changed rounded-3xl to rounded-xl
+                           className="bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden text-left"
                            style={{
                                width: tab.type === 'mega-columns' ? '800px' : '600px'
                            }}
@@ -165,8 +195,7 @@ const Navbar = () => {
                              {tab.type === 'mega-cards' && (
                                 <div className="p-6 grid grid-cols-2 gap-4 relative z-10">
                                     {tab.items.map((card, idx) => (
-                                        <div key={idx} className="relative h-48 rounded-2xl overflow-hidden group/card cursor-pointer bg-gray-100">
-                                            {/* LAG FIX: Added loading="lazy" and decoding="async" to images */}
+                                        <div key={idx} className="relative h-48 rounded-xl overflow-hidden group/card cursor-pointer bg-gray-100">
                                             <img 
                                               src={card.image} 
                                               alt={card.title} 
@@ -178,10 +207,9 @@ const Navbar = () => {
                                             
                                             <div className="absolute bottom-0 left-0 p-5 w-full">
                                                 <h4 className="text-white font-bold text-lg mb-1">{card.title}</h4>
-                                                {/* STYLE FIX: Unbolded text (font-medium) and added brand green color */}
-                        <div className="flex items-center gap-2 text-yellow-400 text-xs font-medium translate-y-2 opacity-0 group-hover/card:opacity-100 group-hover/card:translate-y-0 transition-all duration-300">
-                          <span className="text-yellow-400">{card.action}</span> <ChevronRight size={14} className="text-yellow-400" />
-                        </div>
+                                                <div className="flex items-center gap-2 text-yellow-400 text-xs font-medium translate-y-2 opacity-0 group-hover/card:opacity-100 group-hover/card:translate-y-0 transition-all duration-300">
+                                                  <span className="text-yellow-400">{card.action}</span> <ChevronRight size={14} className="text-yellow-400" />
+                                                </div>
                                             </div>
                                         </div>
                                     ))}
@@ -195,7 +223,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* 3. CTA BUTTON - Reverted to Black */}
+          {/* 3. CTA BUTTON */}
           <div className="hidden md:block shrink-0">
             <motion.button
               onClick={() => scrollToSection('contact')}
